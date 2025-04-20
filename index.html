@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="stylesheet" href="/src/style.css" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + TS</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- <label>
+      <input type="checkbox" /> Player 2 is a computer
+    </label>
+    <label>
+      <input type="range" min="0" max="1" step="0.01" /> Computer difficulty
+    </label> -->
+
+    <div class="game-settings-container">
+      <div class="game-settings-inputs">
+        <label>
+          <input class="winning-score game-setting-input" type="range" min="1" max="15" step="1" value="5" /> Winning
+          score
+        </label>
+        <label>
+          <input class="ball-speed game-setting-input" type="range" min="1" max="10" step="1" value="3" /> Ball speed
+        </label>
+        <label>
+          <input class="paddle-speed game-setting-input" type="range" min="5" max="15" step="1" value="5" /> Paddle
+          speed
+        </label>
+
+        <button class="start-game">Start Game</button>
+      </div>
+
+      <div class="game-settings">
+        <p>Winning score: <span class="winning-score-value">5</span></p>
+        <p>Ball speed: <span class="ball-speed-value">3</span></p>
+        <p>Paddle speed: <span class="paddle-speed-value">5</span></p>
+      </div>
+    </div>
+
+    <canvas class="game-canvas" id="game-canvas" width="600" height="400"></canvas>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
