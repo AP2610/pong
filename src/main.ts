@@ -1,3 +1,13 @@
+// TODO: Update canvas size to make it larger - Priority 1
+// TODO: implement computer AI - Priority 2
+// TODO: Update UI with styling, make it retro like an arcade game - Priority 3
+// TODO: make a mobbile version with a slider for each player to move the paddle - Priority - 4
+// TODO: Refactor into separate files
+// TODO: Refactor variables into objects for better organisation
+// TODO: Use document.querySelectorAll for getting all input elements
+
+import { drawGameState } from "./scripts/draw";
+
 // Get all elements
 const winningScoreInput = document.querySelector(
 	".winning-score"
@@ -9,7 +19,7 @@ const paddleSpeedInput = document.querySelector(
 	".paddle-speed"
 ) as HTMLInputElement;
 const startGameButton = document.querySelector(
-	".start-game"
+	".btn-start-game"
 ) as HTMLButtonElement;
 
 const winningScoreValue = document.querySelector(
@@ -21,6 +31,12 @@ const ballSpeedValue = document.querySelector(
 const paddleSpeedValue = document.querySelector(
 	".paddle-speed-value"
 ) as HTMLSpanElement;
+
+const countdown = document.querySelector(".countdown") as HTMLDivElement;
+const countdownOverlay = document.querySelector(
+	".countdown-overlay"
+) as HTMLDivElement;
+const menu = document.querySelector(".menu") as HTMLDivElement;
 
 const canvas = document.getElementById("game-canvas") as HTMLCanvasElement;
 const context = canvas.getContext("2d");
@@ -141,42 +157,6 @@ const handleKeypressEvent = (event: KeyboardEvent) => {
 };
 
 // Game logic
-const drawGameState = () => {
-	if (!context) return;
-	// Clear the canvas so when invoked, it will clear the previous frame and draw the new frame
-	context.clearRect(0, 0, canvas.width, canvas.height);
-
-	// Draw paddles onto the canvas
-	// Left paddle
-	context.fillStyle = "red";
-	context.fillRect(0, leftPaddleY, paddleWidth, paddleHeight);
-
-	// Right paddle
-	context.fillStyle = "#fff";
-	context.fillRect(
-		canvas.width - paddleWidth,
-		rightPaddleY,
-		paddleWidth,
-		paddleHeight
-	);
-
-	// Draw ball onto the canvas
-	context.beginPath();
-	context.arc(ballX, ballY, 10, 0, Math.PI * 2); // This draws a circle - x, y, radius, start angle, end angle (2 pie)
-	context.fillStyle = "#fff";
-	context.fill();
-	context.closePath();
-
-	// Draw the score
-	context.font = "30px Arial";
-	context.fillStyle = "#fff"; // Explicitly set the fill style for future styling purposes
-	context.fillText(
-		`${leftPlayerScore} - ${rightPlayerScore}`,
-		canvas.width / 2 - 30,
-		30
-	); // Gets the color based on the last set fillStyle outside of path (right paddle)
-};
-
 const checkForWin = () => {
 	if (!(didPlayerWin("left") || didPlayerWin("right"))) return;
 
@@ -185,8 +165,10 @@ const checkForWin = () => {
 	leftPlayerScore = 0;
 	rightPlayerScore = 0;
 	isGameStarted = false;
-	resetPaddles();
+	canvas.style.display = "none";
+	menu.style.display = "block";
 	startGameButton.disabled = false;
+	resetPaddles();
 };
 
 const updateGameplay = () => {
@@ -248,7 +230,12 @@ const updateGameplay = () => {
 	// Insert computer player 2 logic here
 
 	// Draw the updated game on the canvas
-	drawGameState();
+	drawGameState(
+		canvas,
+		context!,
+		{ left: leftPlayerScore, right: rightPlayerScore },
+		{ leftPaddleY, rightPaddleY, paddleWidth, paddleHeight, ballX, ballY }
+	);
 };
 
 const gameLoop = () => {
@@ -260,15 +247,51 @@ const gameLoop = () => {
 	requestAnimationFrame(gameLoop);
 };
 
-const handleStartGameClick = () => {
-	isGameStarted = true;
-	startGameButton.disabled = true;
+const countdownTimer = () => {
+	countdownOverlay.style.display = "flex";
 
-	gameLoop();
+	return new Promise<void>((resolve) => {
+		let count = 5;
+		countdown.innerHTML = count.toString();
+
+		const interval = setInterval(() => {
+			count--;
+			countdown.innerHTML = count.toString();
+
+			if (count === 0) {
+				countdown.innerHTML = "Pong!";
+
+				setTimeout(() => {
+					clearInterval(interval);
+					countdownOverlay.style.display = "none";
+					resolve();
+				}, 1000);
+			} else {
+				countdown.innerHTML = count.toString();
+			}
+		}, 1000);
+	});
+};
+
+const handleStartGameClick = () => {
+	menu.style.display = "none";
+	canvas.style.display = "block";
+
+	countdownTimer().then(() => {
+		countdown.innerHTML = "";
+		isGameStarted = true;
+		startGameButton.disabled = true;
+		gameLoop();
+	});
 };
 
 // Draw the initial game state
-drawGameState();
+drawGameState(
+	canvas,
+	context!,
+	{ left: leftPlayerScore, right: rightPlayerScore },
+	{ leftPaddleY, rightPaddleY, paddleWidth, paddleHeight, ballX, ballY }
+);
 
 // Event listeners
 document.addEventListener("keydown", handleKeypressEvent);
