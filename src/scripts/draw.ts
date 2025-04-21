@@ -1,4 +1,7 @@
-import type { PlayerScores } from "./types";
+import { ballConfig, paddleConfig, playerScores } from "../config";
+import { elements } from "../helpers/elements";
+
+const { canvas, context } = elements;
 
 const colors = {
 	colorPrimary: window
@@ -22,11 +25,7 @@ const scoreBoxConfig = {
 	boxY: 0,
 };
 
-const drawScoreText = (
-	canvas: HTMLCanvasElement,
-	context: CanvasRenderingContext2D,
-	playerScores: PlayerScores
-) => {
+const drawScoreText = () => {
 	if (!context) return;
 	const { colorPrimary } = colors;
 	const { left: leftPlayerScore, right: rightPlayerScore } = playerScores;
@@ -68,10 +67,7 @@ const drawScoreText = (
 	);
 };
 
-const drawCenterDottedLine = (
-	context: CanvasRenderingContext2D,
-	canvas: HTMLCanvasElement
-) => {
+const drawCenterDottedLine = () => {
 	if (!context) return;
 	const { colorPrimary } = colors;
 	const { boxHeight } = scoreBoxConfig;
@@ -91,14 +87,11 @@ const drawCenterDottedLine = (
 	context.setLineDash([]);
 };
 
-const drawBall = (
-	context: CanvasRenderingContext2D,
-	ballX: number,
-	ballY: number
-) => {
+const drawBall = () => {
 	if (!context) return;
 
 	const { colorSecondary } = colors;
+	const { ballX, ballY } = ballConfig;
 
 	// Draw ball onto the canvas
 	context.beginPath();
@@ -108,16 +101,12 @@ const drawBall = (
 	context.closePath();
 };
 
-const drawPaddles = (
-	context: CanvasRenderingContext2D,
-	canvas: HTMLCanvasElement,
-	gameInstrumentsConfig: Record<string, number>
-) => {
+const drawPaddles = () => {
 	if (!context) return;
 
 	const { colorGreen, colorRed } = colors;
 	const { leftPaddleY, rightPaddleY, paddleWidth, paddleHeight } =
-		gameInstrumentsConfig;
+		paddleConfig;
 
 	// Left paddle
 	context.fillStyle = colorRed;
@@ -133,26 +122,21 @@ const drawPaddles = (
 	);
 };
 
-export const drawGameState = (
-	canvas: HTMLCanvasElement,
-	context: CanvasRenderingContext2D,
-	playerScores: PlayerScores,
-	gameInstrumentsConfig: Record<string, number>
-) => {
+export const drawGameState = () => {
 	if (!context) return;
 
 	// Clear the canvas so when invoked, it will clear the previous frame and draw the new frame
 	context.clearRect(0, 0, canvas.width, canvas.height);
 
 	// Draw center dotted line
-	drawCenterDottedLine(context, canvas);
+	drawCenterDottedLine();
 
 	// Draw paddles onto the canvas
-	drawPaddles(context, canvas, gameInstrumentsConfig);
+	drawPaddles();
 
 	// Draw ball onto the canvas
-	drawBall(context, gameInstrumentsConfig.ballX, gameInstrumentsConfig.ballY);
+	drawBall();
 
 	// Draw score box and text
-	drawScoreText(canvas, context, playerScores);
+	drawScoreText();
 };
