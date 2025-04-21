@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <div id="app">
+  <main id="app">
     <!-- <label>
       <input type="checkbox" /> Player 2 is a computer
     </label>
@@ -19,32 +19,41 @@
       <input type="range" min="0" max="1" step="0.01" /> Computer difficulty
     </label> -->
 
-    <div class="game-settings-container">
-      <div class="game-settings-inputs">
-        <label>
-          <input class="winning-score game-setting-input" type="range" min="1" max="15" step="1" value="5" /> Winning
-          score
-        </label>
-        <label>
-          <input class="ball-speed game-setting-input" type="range" min="1" max="10" step="1" value="3" /> Ball speed
-        </label>
-        <label>
-          <input class="paddle-speed game-setting-input" type="range" min="5" max="15" step="1" value="5" /> Paddle
-          speed
-        </label>
+    <div class="countdown-overlay" style="display: none;">
+      <div class="countdown">5</div>
+    </div>
 
-        <button class="start-game">Start Game</button>
-      </div>
+    <div class="menu">
+      <div class="game-settings-inputs-container">
+        <div class="game-settings-input-container">
+          <label class="game-setting-label" for="winning-score-input">Winning score <span
+              class="winning-score-value">5</span></label>
+          <input id="winning-score-input" name="winning-score" class="winning-score game-setting-range-input"
+            type="range" min="1" max="15" step="1" value="5" />
+        </div>
 
-      <div class="game-settings">
-        <p>Winning score: <span class="winning-score-value">5</span></p>
-        <p>Ball speed: <span class="ball-speed-value">3</span></p>
-        <p>Paddle speed: <span class="paddle-speed-value">5</span></p>
+        <div class="game-settings-input-container">
+          <label class="game-setting-label" for="ball-speed-input">Ball speed <span
+              class="ball-speed-value">3</span></label>
+          <input id="ball-speed-input" name="ball-speed" class="ball-speed game-setting-range-input" type="range"
+            min="1" max="10" step="1" value="3" />
+        </div>
+
+        <div class="game-settings-input-container">
+          <label class="game-setting-label" for="paddle-speed-input">Paddle speed <span
+              class="paddle-speed-value">5</span></label>
+          <input id="paddle-speed-input" name="paddle-speed" class="paddle-speed game-setting-range-input" type="range"
+            min="5" max="15" step="1" value="5" />
+        </div>
+
+        <button class="btn-start-game">Start Game</button>
       </div>
     </div>
 
-    <canvas class="game-canvas" id="game-canvas" width="600" height="400"></canvas>
-  </div>
+    <div class="canvas-container">
+      <canvas class="game-canvas" id="game-canvas" width="600" height="400" style="display: block;"></canvas>
+    </div>
+  </main>
   <script type="module" src="/src/main.ts"></script>
 </body>
 

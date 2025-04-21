@@ -1,11 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap');
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* Colors */
+  --color-background: #0A0A0A;
+  --color-primary: #00FFF7;
+  --color-secondary: #A100FF;
+  --color-accent-1: #007BFF;
+  --color-accent-2: #AFFF00;
+  --color-warning: #FF003C;
+  --color-success: #00C896;
+  --color-ui-elements: #3A3F44;
+  --color-text: #E0E0E0;
+
+  /* Optional glow effect (for reference) */
+  --glow-primary: rgba(0, 255, 247, 0.1);
+  --glow-secondary: rgba(161, 0, 255, 0.4);
+
+  font-family: 'Oxanium',
+    system-ui,
+    Avenir,
+    Helvetica,
+    Arial,
+    sans-serif;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: 800;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--ghost-white);
+  background-color: var(--grey);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,37 +37,146 @@
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
   min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  display: flex;
+  background-color: var(--color-background);
 }
 
 #app {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@media (prefers-color-scheme: light) {
+.countdown-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.countdown {
+  color: var(--color-primary);
+  font-size: 6rem;
+}
+
+/* @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--oxford-blue);
+    background-color: var(--ghost-white);
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
+} */
+
+.menu {
+  height: fit-content;
+  width: 300px;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--color-primary);
+  box-shadow: 0 0 4px var(--color-primary),
+              0 0 12px var(--color-primary),
+              inset 0 0 6px var(--color-primary);
+  
 }
 
+.canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
 .game-canvas {
-  border: 2px solid #fff;
+  background: linear-gradient(120deg, var(--color-background) 0%, var(--color-ui-elements) 100%);
+  border-radius: 6px;
+  border: 1px solid var(--color-secondary);
+  box-shadow: 0 0 4px var(--color-secondary),
+    0 0 12px var(--color-secondary),
+    inset 0 0 6px var(--color-secondary);
+}
+
+.game-settings-inputs-container {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 2rem;
+}
+.game-settings-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.game-setting-label {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text);
+  font-size: 1.5rem;
+}
+
+.game-setting-range-input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  border-radius: 15px;
+}
+.game-setting-range-input::-webkit-slider-runnable-track {
+  height: 15px;
+  background: var(--color-ui-elements);
+}
+.game-setting-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 15px;
+  width: 15px;
+  background-color: var(--color-ui-elements);
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+  box-shadow: -407px 0 0 400px var(--color-primary);
+  cursor: grab;
+}
+
+.btn-start-game {
+  background-color: var(--glow-primary);
+  box-shadow: 0 0 4px var(--color-primary),
+              0 0 12px var(--color-primary),
+              inset 0 0 6px var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: 6px;
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-family: inherit;
+  margin-top: 1rem;
+  padding: 1rem;
+  transition: all .3s ease;
+
+  &:hover {
+    background-color: var(--color-primary);
+  }
+
+  &:active {
+    scale: 1.05;
+  }
 }
