@@ -25,14 +25,8 @@
   line-height: 1.5;
   font-weight: 800;
 
-  color-scheme: light dark;
   color: var(--ghost-white);
   background-color: var(--grey);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -48,8 +42,16 @@ body {
   padding: 2rem;
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.main-title {
+  font-size: 6rem;
+  margin-top: 0;
+  text-shadow: 0px 0px 10px var(--color-primary);
+  color: var(--color-primary);
 }
 
 .countdown-overlay {
@@ -70,21 +72,6 @@ body {
   color: var(--color-primary);
   font-size: 6rem;
 }
-
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: var(--oxford-blue);
-    background-color: var(--ghost-white);
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
-} */
 
 .menu {
   height: fit-content;

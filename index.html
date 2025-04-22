@@ -12,13 +12,7 @@
 
 <body>
   <main id="app">
-    <!-- <label>
-      <input type="checkbox" /> Player 2 is a computer
-    </label>
-    <label>
-      <input type="range" min="0" max="1" step="0.01" /> Computer difficulty
-    </label> -->
-
+    <h1 class="main-title">Pong</h1>
     <div class="countdown-overlay" style="display: none;">
       <div class="countdown">5</div>
     </div>
@@ -28,6 +22,7 @@
         <div class="game-settings-input-container">
           <label class="game-setting-label" for="winning-score-input">Winning score <span
               class="winning-score-value">5</span></label>
+
           <input id="winning-score-input" name="winning-score" class="winning-score game-setting-range-input"
             type="range" min="1" max="15" step="1" value="5" />
         </div>
@@ -35,6 +30,7 @@
         <div class="game-settings-input-container">
           <label class="game-setting-label" for="ball-speed-input">Ball speed <span
               class="ball-speed-value">3</span></label>
+
           <input id="ball-speed-input" name="ball-speed" class="ball-speed game-setting-range-input" type="range"
             min="1" max="10" step="1" value="3" />
         </div>
@@ -51,7 +47,7 @@
     </div>
 
     <div class="canvas-container">
-      <canvas class="game-canvas" id="game-canvas" width="600" height="400" style="display: block;"></canvas>
+      <canvas class="game-canvas" id="game-canvas" width="600" height="400" style="display: none;"></canvas>
     </div>
   </main>
   <script type="module" src="/src/main.ts"></script>
