@@ -7,7 +7,7 @@ export const countdownTimer = () => {
 	countdownOverlay.style.display = "flex";
 
 	return new Promise<void>((resolve) => {
-		let count = 5;
+		let count = 1;
 		countdown.innerHTML = count.toString();
 
 		const interval = setInterval(() => {
