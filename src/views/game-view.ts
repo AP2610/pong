@@ -63,7 +63,7 @@ class GameView {
 	private drawCenterDottedLine() {
 		if (!this.context) return;
 
-		const { colorPrimary } = this.colors;
+		const { colorSecondary } = this.colors;
 		const { boxHeight } = this.scoreBoxConfig;
 
 		const lineWidth = 2;
@@ -74,8 +74,8 @@ class GameView {
 		this.context.beginPath();
 		this.context.setLineDash([dashLength, gapLength]);
 		this.context.lineWidth = lineWidth;
-		this.context.strokeStyle = colorPrimary;
-		this.context.moveTo(centerX, boxHeight);
+		this.context.strokeStyle = colorSecondary;
+		this.context.moveTo(centerX, boxHeight + gapLength);
 		this.context.lineTo(centerX, this.canvas.height);
 		this.context.stroke();
 		this.context.setLineDash([]);
@@ -95,20 +95,26 @@ class GameView {
 		this.context.closePath();
 	}
 
-	private drawPaddles = () => {
+	private drawPaddles() {
 		if (!this.context) return;
 
 		const { colorGreen, colorRed } = this.colors;
 		const { leftPaddleY, rightPaddleY, paddleWidth, paddleHeight } = gameStateManager.paddleState;
 
 		// Left paddle
+		this.context.beginPath();
 		this.context.fillStyle = colorRed;
-		this.context.fillRect(0, leftPaddleY, paddleWidth, paddleHeight);
+		this.context.roundRect(0, leftPaddleY, paddleWidth, paddleHeight, 6);
+		this.context.fill();
+		this.context.closePath();
 
 		// Right paddle
+		this.context.beginPath();
 		this.context.fillStyle = colorGreen;
-		this.context.fillRect(this.canvas.width - paddleWidth, rightPaddleY, paddleWidth, paddleHeight);
-	};
+		this.context.roundRect(this.canvas.width - paddleWidth, rightPaddleY, paddleWidth, paddleHeight, 6);
+		this.context.fill();
+		this.context.closePath();
+	}
 
 	drawGameState() {
 		if (!this.context) return;

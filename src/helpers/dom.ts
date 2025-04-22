@@ -1,25 +1,13 @@
-const winningScoreInput = document.querySelector(
-	".winning-score"
-) as HTMLInputElement;
-const ballSpeedInput = document.querySelector(
-	".ball-speed"
-) as HTMLInputElement;
-const paddleSpeedInput = document.querySelector(
-	".paddle-speed"
-) as HTMLInputElement;
-const startGameButton = document.querySelector(
-	".btn-start-game"
-) as HTMLButtonElement;
+const winningScoreInput = document.querySelector(".winning-score") as HTMLInputElement;
+const ballSpeedInput = document.querySelector(".ball-speed") as HTMLInputElement;
+const paddleSpeedInput = document.querySelector(".paddle-speed") as HTMLInputElement;
+const startGameButton = document.querySelector(".btn-start-game") as HTMLButtonElement;
+const backToMenuButton = document.querySelector(".btn-back-to-menu") as HTMLButtonElement;
+const mainTitle = document.querySelector(".main-title") as HTMLHeadingElement;
 
-const winningScoreValue = document.querySelector(
-	".winning-score-value"
-) as HTMLSpanElement;
-const ballSpeedValue = document.querySelector(
-	".ball-speed-value"
-) as HTMLSpanElement;
-const paddleSpeedValue = document.querySelector(
-	".paddle-speed-value"
-) as HTMLSpanElement;
+const winningScoreValue = document.querySelector(".winning-score-value") as HTMLSpanElement;
+const ballSpeedValue = document.querySelector(".ball-speed-value") as HTMLSpanElement;
+const paddleSpeedValue = document.querySelector(".paddle-speed-value") as HTMLSpanElement;
 
 const menu = document.querySelector(".menu") as HTMLDivElement;
 
@@ -31,6 +19,8 @@ export const elements = {
 	ballSpeedInput,
 	paddleSpeedInput,
 	startGameButton,
+	backToMenuButton,
+	mainTitle,
 	winningScoreValue,
 	ballSpeedValue,
 	paddleSpeedValue,

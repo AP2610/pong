@@ -4,9 +4,14 @@ import { PaddleConfig } from "../types/types";
 import { drawGameState } from "../views/game-view";
 
 export class GameController {
-	private continueGame = true;
 	private readonly canvas = elements.canvas;
+	private readonly backToMenuButton = elements.backToMenuButton;
 	private readonly movementConfig: Record<string, Record<string, () => void>>;
+
+	private continueGame = true;
+
+	// Determines game pause state
+	private isRoundInProgress = false;
 
 	constructor() {
 		this.movementConfig = {
@@ -30,13 +35,21 @@ export class GameController {
 	}
 
 	start(): void {
+		// Reset game state to avoid showing the old scores before the new game starts
+		gameStateManager.resetGameState();
+
 		gameStateManager.isGameStarted = true;
+
+		// Set the pause state
+		this.isRoundInProgress = true;
+
 		this.setUpEventListeners();
 		this.gameLoop();
 	}
 
 	private stop(): void {
 		gameStateManager.isGameStarted = false;
+
 		this.removeEventListeners();
 	}
 
@@ -55,11 +68,13 @@ export class GameController {
 	private setUpEventListeners(): void {
 		document.addEventListener("keydown", this.handleKeypressEvent);
 		document.addEventListener("keyup", this.handleKeypressEvent);
+		this.backToMenuButton.addEventListener("click", this.handleBackToMenuClick);
 	}
 
 	private removeEventListeners(): void {
 		document.removeEventListener("keydown", this.handleKeypressEvent);
 		document.removeEventListener("keyup", this.handleKeypressEvent);
+		this.backToMenuButton.removeEventListener("click", this.handleBackToMenuClick);
 	}
 
 	private setPaddleVelocity(paddle: "left" | "right", velocity: number): void {
@@ -80,13 +95,19 @@ export class GameController {
 		});
 	};
 
+	private handleBackToMenuClick = () => {
+		gameStateManager.resetGame();
+		this.backToMenuButton.style.display = "none";
+		this.continueGame = false;
+	};
+
 	private checkForWin(): boolean {
 		const { scoresState, settingsState } = gameStateManager;
 		const winner = scoresState.left === settingsState.winningScore ? "left" : scoresState.right === settingsState.winningScore ? "right" : null;
 
 		if (!winner) return true;
 
-		// Allow one final render to show the updated score
+		// Allow one final render by requesting the next frame before reset to show the updated score
 		requestAnimationFrame(() => {
 			alert(`Player ${winner === "left" ? "1" : "2"} Wins!`);
 			gameStateManager.resetGame();
@@ -135,16 +156,41 @@ export class GameController {
 			// Bounce ball of the paddle
 			ballState.ballSpeedX = -ballState.ballSpeedX;
 		} else {
-			// Reset ball position to center of canvas, increment player score oppposite to the current paddle, check for win
+			// Point won, pause the round
+			this.isRoundInProgress = false;
+
+			// Reset ball position to center of canvas
 			ballState.ballX = this.canvas.width / 2;
 			ballState.ballY = this.canvas.height / 2;
+
+			// increment player score oppposite to the current paddle
 			gameStateManager.updateScore(paddle === "left" ? "right" : "left");
 
+			// Check for win, continue game if no one has won yet
 			this.continueGame = this.checkForWin();
+
+			// Next round, wait 1.5 seconds then unpause to avoid round starting immediately
+			if (this.continueGame) {
+				setTimeout(() => {
+					// unpause
+					this.isRoundInProgress = true;
+
+					// Move the ball towards the winning player
+					ballState.ballSpeedX = -ballState.ballSpeedX;
+
+					// Reverse the ball vertical movement
+					ballState.ballSpeedY = -ballState.ballSpeedY;
+				}, 1500);
+			}
 		}
 	}
 
 	private updateGameplay(): boolean {
+		// Dont update if the game is paused
+		if (!this.isRoundInProgress) {
+			drawGameState(); // Keep drawing the frozen state
+			return this.continueGame;
+		}
 		const { paddleState } = gameStateManager;
 
 		// Update paddle positions
@@ -168,8 +214,6 @@ export class GameController {
 
 		// Make sure right paddle stays within the canvas
 		this.handlePaddleYPosition("right");
-
-		// Insert computer player 2 logic here
 
 		// Draw the updated game on the canvas
 		drawGameState();

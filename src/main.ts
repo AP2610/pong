@@ -5,9 +5,11 @@ import { GameController } from "./controllers/game-controller";
 import { SettingsView } from "./views/settings-view";
 
 class Game {
-	private startGameButton = elements.startGameButton;
-	private menu = elements.menu;
-	private canvas = elements.canvas;
+	private readonly startGameButton = elements.startGameButton;
+	private readonly menu = elements.menu;
+	private readonly canvas = elements.canvas;
+	private readonly backToMenuButton = elements.backToMenuButton;
+	private readonly mainTitle = elements.mainTitle;
 
 	constructor() {
 		this.initialise();
@@ -15,6 +17,7 @@ class Game {
 
 	private initialise() {
 		new SettingsView();
+
 		this.setupEventListeners();
 
 		// Draw the initial game state
@@ -29,6 +32,8 @@ class Game {
 	private handleStartGameClick = (): void => {
 		this.menu.style.display = "none";
 		this.canvas.style.display = "block";
+		this.backToMenuButton.style.display = "block";
+		this.mainTitle.style.display = "none";
 
 		countdownTimer().then(() => {
 			this.startGameButton.disabled = true;

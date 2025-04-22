@@ -87,6 +87,8 @@ body {
 
 .canvas-container {
   display: flex;
+  flex-direction: column;
+  gap: 2rem;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
@@ -143,7 +145,8 @@ body {
   cursor: grab;
 }
 
-.btn-start-game {
+.btn-start-game,
+.btn-back-to-menu {
   background-color: var(--glow-primary);
   box-shadow: 0 0 4px var(--color-primary),
               0 0 12px var(--color-primary),

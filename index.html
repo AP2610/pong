@@ -39,14 +39,14 @@
               class="ball-speed-value">3</span></label>
 
           <input id="ball-speed-input" name="ball-speed" class="ball-speed game-setting-range-input" type="range"
-            min="1" max="10" step="1" value="3" />
+            min="1" max="6" step="1" value="3" />
         </div>
 
         <div class="game-settings-input-container">
           <label class="game-setting-label" for="paddle-speed-input">Paddle speed <span
               class="paddle-speed-value">5</span></label>
           <input id="paddle-speed-input" name="paddle-speed" class="paddle-speed game-setting-range-input" type="range"
-            min="5" max="15" step="1" value="5" />
+            min="5" max="10" step="1" value="5" />
         </div>
 
         <button class="btn-start-game">Start Game</button>
@@ -54,6 +54,7 @@
     </div>
 
     <div class="canvas-container">
+      <button class="btn-back-to-menu" style="display: none;">Back to menu</button>
       <canvas class="game-canvas" id="game-canvas" width="600" height="400" style="display: none;"></canvas>
     </div>
   </main>
