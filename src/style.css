@@ -183,7 +183,6 @@ body {
   padding: 2rem;
   text-align: center;
 }
-
 .mobile-warning-content {
   position: absolute;
   top: 50%;
@@ -191,14 +190,12 @@ body {
   transform: translate(-50%, -50%);
   color: var(--color-text);
 }
-
 .mobile-warning-content h2 {
   color: var(--color-primary);
   font-size: 2rem;
   margin-bottom: 1.5rem;
   text-shadow: 0px 0px 10px var(--color-primary);
 }
-
 .mobile-warning-future {
   margin-top: 2rem;
   color: var(--color-secondary);
