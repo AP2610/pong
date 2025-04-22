@@ -170,3 +170,37 @@ body {
     scale: 1.05;
   }
 }
+
+.mobile-warning-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-background);
+  z-index: 2000;
+  padding: 2rem;
+  text-align: center;
+}
+
+.mobile-warning-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--color-text);
+}
+
+.mobile-warning-content h2 {
+  color: var(--color-primary);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0px 0px 10px var(--color-primary);
+}
+
+.mobile-warning-future {
+  margin-top: 2rem;
+  color: var(--color-secondary);
+  font-style: italic;
+}

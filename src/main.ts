@@ -10,9 +10,25 @@ class Game {
 	private readonly canvas = elements.canvas;
 	private readonly backToMenuButton = elements.backToMenuButton;
 	private readonly mainTitle = elements.mainTitle;
+	private readonly warning = elements.warning;
+	private readonly app = elements.app;
 
 	constructor() {
+		if (this.isTouchDevice()) {
+			this.showTouchWarning();
+			return;
+		}
+
 		this.initialise();
+	}
+
+	private isTouchDevice(): boolean {
+		return "ontouchstart" in window || navigator.maxTouchPoints > 0 || (navigator as any).msMaxTouchPoints > 0;
+	}
+
+	private showTouchWarning(): void {
+		this.warning.style.display = "block";
+		this.app!.style.display = "none";
 	}
 
 	private initialise() {
