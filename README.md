@@ -2,6 +2,8 @@
 
 A simple in-browser Pong game built over a couple of days to learn about HTML Canvas and practice vanilla TypeScript.
 
+Check it out here: [Pong Game](https://pong-five-dusky.vercel.app/)
+
 ## Overview
 
 This project is a hobby implementation of the classic Pong game, focusing primarily on Canvas manipulation and TypeScript fundamentals. The game features:
