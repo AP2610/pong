@@ -1,13 +1,11 @@
 const countdown = document.querySelector(".countdown") as HTMLDivElement;
-const countdownOverlay = document.querySelector(
-	".countdown-overlay"
-) as HTMLDivElement;
+const countdownOverlay = document.querySelector(".countdown-overlay") as HTMLDivElement;
 
 export const countdownTimer = () => {
 	countdownOverlay.style.display = "flex";
 
 	return new Promise<void>((resolve) => {
-		let count = 1;
+		let count = 3;
 		countdown.innerHTML = count.toString();
 
 		const interval = setInterval(() => {

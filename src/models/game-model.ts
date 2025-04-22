@@ -6,7 +6,7 @@ const { canvas } = elements;
 class GameModel {
 	private gameConfig: GameConfig = {
 		settings: {
-			winningScore: 1,
+			winningScore: 5,
 			ballSpeed: 3,
 			paddleSpeed: 5,
 		},
@@ -81,7 +81,7 @@ class GameModel {
 		}
 	}
 
-	private resetGame() {
+	resetGame() {
 		this.scoresState.left = 0;
 		this.scoresState.right = 0;
 		this.paddleState.leftPaddleY = 160;
@@ -92,21 +92,6 @@ class GameModel {
 		elements.canvas.style.display = "none";
 		elements.menu.style.display = "block";
 		elements.startGameButton.disabled = false;
-	}
-
-	checkForWin(): boolean {
-		const winner =
-			this.scoresState.left === this.settingsState.winningScore
-				? "left"
-				: this.scoresState.right === this.settingsState.winningScore
-				? "right"
-				: null;
-
-		if (!winner) return true;
-
-		alert(`Player ${winner === "left" ? "1" : "2"} Wins!`);
-		this.resetGame();
-		return false;
 	}
 }
 

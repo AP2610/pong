@@ -1,7 +1,7 @@
-import { gameStateManager } from "./game-model";
 import { elements } from "../helpers/dom";
-import { drawGameState } from "./game-view";
+import { gameStateManager } from "../models/game-model";
 import { PaddleConfig } from "../types/types";
+import { drawGameState } from "../views/game-view";
 
 export class GameController {
 	private continueGame = true;
@@ -80,6 +80,21 @@ export class GameController {
 		});
 	};
 
+	private checkForWin(): boolean {
+		const { scoresState, settingsState } = gameStateManager;
+		const winner = scoresState.left === settingsState.winningScore ? "left" : scoresState.right === settingsState.winningScore ? "right" : null;
+
+		if (!winner) return true;
+
+		// Allow one final render to show the updated score
+		requestAnimationFrame(() => {
+			alert(`Player ${winner === "left" ? "1" : "2"} Wins!`);
+			gameStateManager.resetGame();
+		});
+
+		return false;
+	}
+
 	private handleWallCollision(): void {
 		const { ballState } = gameStateManager;
 
@@ -125,7 +140,7 @@ export class GameController {
 			ballState.ballY = this.canvas.height / 2;
 			gameStateManager.updateScore(paddle === "left" ? "right" : "left");
 
-			this.continueGame = gameStateManager.checkForWin();
+			this.continueGame = this.checkForWin();
 		}
 	}
 
